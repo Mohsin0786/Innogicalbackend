@@ -5,7 +5,6 @@ const cors = require('cors')
 let axios = require('axios');
 const Snippet = require('./models/snippet')
 const mongoose = require('mongoose');
-// const { v4: uuidv4 } = require('uuid');
 app.use(cors())
 
 app.use(express.json());
@@ -31,7 +30,6 @@ app.get('/', (req, res) => {
 })
  
 app.get('/savecode/:editorID',(req,res)=>{
-console.log("Params",req.params.editorID)
 Snippet.find({_id:req.params.editorID})
     .then((productData)=>{
         res.status(200).json({data:productData})
@@ -41,14 +39,7 @@ Snippet.find({_id:req.params.editorID})
     })
 })
 app.post('/savecode',(req,res)=>{
-    // Snippet.find({_id:req.body.editorID})
-    // .then((productData)=>{
-    //     console.log(productData)
-    //     res.status(200)
-    // })
-    // .catch((error)=>{
-    //     res.status(400).json({error:error})
-    // })
+  
     Snippet.findOneAndUpdate({ _id: req.body.editorID }, { code: req.body.codedata },(
         err,
         result
@@ -82,7 +73,7 @@ app.post('/postcode', (req, res) => {
     axios(config)
         .then(function (response) {
             returnData = response.data;
-            // console.log("Response wala data", returnData);
+            
         })
         .then(()=>{res.status(200).json({ message: returnData })})
         .catch(function (error) {
@@ -91,7 +82,7 @@ app.post('/postcode', (req, res) => {
     
 })
 app.post('/postsnippet',(req,res)=>{
-    // console.log("snippet",req.body);
+   
 
     const snippet = new Snippet({
         projectName:req.body.snippet_name,
